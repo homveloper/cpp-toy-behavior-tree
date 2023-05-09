@@ -1,9 +1,11 @@
-#include <nlohmann/json.hpp>
 #include <string>
 #include <vector>
 #include <memory>
 #include <iostream>
 #include <stack>
+#include <functional>
+#include <cassert>
+#include <unordered_map>
 
 enum class ENodeState
 {
@@ -408,7 +410,7 @@ public:
     CDecoratorBuilder(Builder *builder, CDecoratorNode *node) : builder_(builder), node_(node) {}
 
     template <class NodeType, typename... Args>
-    CDecoratorBuilder<Builder> &Child(Args... args)
+    CDecoratorBuilder<Builder> &Action(Args... args)
     {
         auto child = std::make_unique<NodeType>((args)...);
         node_->SetChild(std::move(child));
